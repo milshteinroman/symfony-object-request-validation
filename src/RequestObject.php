@@ -7,10 +7,21 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
+/**
+ * Class RequestObject
+ *
+ * @package Fesor\RequestObject
+ */
 class RequestObject
 {
-    private $payload;
+    /**
+     * @var array $payload
+     */
+    private array $payload;
 
+    /**
+     * @param array $payload
+     */
     public function setPayload(array $payload = [])
     {
         $this->payload = $payload;

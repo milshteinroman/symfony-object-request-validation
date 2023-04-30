@@ -4,6 +4,11 @@ namespace Fesor\RequestObject;
 
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Interface PayloadResolver
+ *
+ * @package Fesor\RequestObject
+ */
 interface PayloadResolver
 {
     /**

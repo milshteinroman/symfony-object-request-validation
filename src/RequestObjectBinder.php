@@ -7,23 +7,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+/**
+ * Class RequestObjectBinder
+ *
+ * @package Fesor\RequestObject
+ */
 class RequestObjectBinder
 {
-    /**
-     * @var ValidatorInterface
-     */
-    private $validator;
-
-    /**
-     * @var PayloadResolver
-     */
-    private $payloadResolver;
-
-    /**
-     * @var ErrorResponseProvider|null
-     */
-    private $errorResponseProvider;
-
     /**
      * RequestObjectBinder constructor.
      *
@@ -32,13 +22,10 @@ class RequestObjectBinder
      * @param ErrorResponseProvider|null $errorResponseProvider
      */
     public function __construct(
-        PayloadResolver $payloadResolver,
-        ValidatorInterface $validator,
-        ErrorResponseProvider $errorResponseProvider = null
+        private PayloadResolver $payloadResolver,
+        private ValidatorInterface $validator,
+        private ?ErrorResponseProvider $errorResponseProvider = null
     ) {
-        $this->validator = $validator;
-        $this->payloadResolver = $payloadResolver;
-        $this->errorResponseProvider = $errorResponseProvider;
     }
 
     /**
@@ -111,8 +98,7 @@ class RequestObjectBinder
             $actionReflection = $classReflection->getMethod($action[1]);
         } elseif ($action instanceof \Closure || is_string($action)) {
             $actionReflection = new \ReflectionFunction($action);
-        }
-        else {
+        } else {
             $classReflection = new \ReflectionClass($action);
             $actionReflection = $classReflection->getMethod('__invoke');
         }
@@ -131,6 +117,12 @@ class RequestObjectBinder
         return $matchedArguments;
     }
 
+    /**
+     * @param RequestObject $requestObject
+     * @param Request       $request
+     *
+     * @return array
+     */
     private function resolvePayload(RequestObject $requestObject, Request $request)
     {
         if ($requestObject instanceof PayloadResolver) {

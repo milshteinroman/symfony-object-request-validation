@@ -5,6 +5,11 @@ namespace Fesor\RequestObject;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
+/**
+ * Interface ErrorResponseProvider
+ *
+ * @package Fesor\RequestObject
+ */
 interface ErrorResponseProvider
 {
     /**

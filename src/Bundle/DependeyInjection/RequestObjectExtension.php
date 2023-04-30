@@ -12,8 +12,17 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Reference;
 
+/**
+ * Class RequestObjectExtension
+ *
+ * @package Fesor\RequestObject\Bundle\DependeyInjection
+ */
 class RequestObjectExtension extends Extension
 {
+    /**
+     * @param array            $configs
+     * @param ContainerBuilder $container
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $this->registerPayloadResolver($container);
@@ -21,7 +30,10 @@ class RequestObjectExtension extends Extension
         $this->registerEventListener($container);
     }
 
-    private function registerPayloadResolver(ContainerBuilder $container)
+    /**
+     * @param ContainerBuilder $container
+     */
+    private function registerPayloadResolver(ContainerBuilder $container): void
     {
         $definition = new Definition(PayloadResolver::class);
         $definition->setAbstract(true);
@@ -34,7 +46,10 @@ class RequestObjectExtension extends Extension
         $container->setAlias(PayloadResolver::class, 'request_object.payload_resolver.http');
     }
 
-    private function registerRequestBinder(ContainerBuilder $container)
+    /**
+     * @param ContainerBuilder $container
+     */
+    private function registerRequestBinder(ContainerBuilder $container): void
     {
         $definition = new Definition(RequestObjectBinder::class, []);
         $definition->setAutowired(true);
@@ -42,7 +57,10 @@ class RequestObjectExtension extends Extension
         $container->setDefinition('request_object.request_binder', $definition);
     }
 
-    private function registerEventListener(ContainerBuilder $container)
+    /**
+     * @param ContainerBuilder $container
+     */
+    private function registerEventListener(ContainerBuilder $container): void
     {
         $definition = new Definition(RequestObjectEventListener::class, [
             new Reference('request_object.request_binder'),

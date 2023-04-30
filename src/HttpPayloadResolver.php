@@ -4,6 +4,11 @@ namespace Fesor\RequestObject;
 
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class HttpPayloadResolver
+ *
+ * @package Fesor\RequestObject
+ */
 class HttpPayloadResolver implements PayloadResolver
 {
     /**
@@ -21,6 +26,11 @@ class HttpPayloadResolver implements PayloadResolver
         );
     }
 
+    /**
+     * @param $methodName
+     *
+     * @return bool
+     */
     private function shouldNotHasRequestBody($methodName)
     {
         return in_array($methodName, ['GET', 'HEAD', 'DELETE'], true);
